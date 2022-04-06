@@ -32,11 +32,16 @@ class IPHelper(BaseCommDeviceHelper):
 
     def __init__(self, **kwargs):
         """
+        The __init__ function is called when an instance of the class is created.
+        It initializes all of the variables that are defined in it and makes them
+        available for use throughout the life of the object.  In this case, we're using
+        it to initialize a socket so that we can connect to a remote host.
 
-        Constructor
+        :param self: Used to Reference the object of the class.
+        :param **kwargs: Used to Pass a keyworded, variable-length argument list.
+        :return: The object of the class that is calling it.
 
-        param kwargs: most of the parameters are used to configure the logging framework
-
+        :doc-author: Trelent
         """
         super(IPHelper, self).__init__(address="Address not defined",
                                        recv_proc=self.__process_input__,
@@ -44,8 +49,14 @@ class IPHelper(BaseCommDeviceHelper):
 
     def __process_input__(self, queue: Q):
         """
-        Collect incoming data into a message buffer before putting the buffer into an event queue
-        :param queue:
+        The __process_input__ function is a private function that is called by the __run__ method.
+        It collects incoming data into a message buffer before putting the buffer into an event queue.
+
+        :param self: Used to Reference the object itself.
+        :param queue:Q: Used to Pass the event queue to the __process_input__ function.
+        :return: A string that contains the message buffer.
+
+        :doc-author: Trelent
         """
         msg = ''
         while self.continue_thread:
@@ -58,6 +69,16 @@ class IPHelper(BaseCommDeviceHelper):
                 continue
 
     def _send(self, data):
+        """
+        The _send function is a helper function that sends data to the server.
+        It is used by the send_command function, but can also be used directly if you want to send raw data.
+
+        :param self: Used to Reference the object itself.
+        :param data: Used to Pass the data to be sent.
+        :return: The data with a newline character appended to it.
+
+        :doc-author: Trelent
+        """
         data = str(data)
         if data is not None and ('\r\n' not in data and '\n' not in data):
             data += '\r\n'
@@ -65,9 +86,29 @@ class IPHelper(BaseCommDeviceHelper):
         self._socket.sendall(data)
 
     def _recv(self, size=1024):
+        """
+        The _recv function receives a message from the client and returns it.
+
+        :param self: Used to Reference the class instance.
+        :param size=1024: Used to Specify the maximum amount of data to be received at once.
+        :return: The data received from the socket.
+
+        :doc-author: Trelent
+        """
         return self._socket.recv(2)
 
     def _open(self, **kwargs):
+        """
+        The _open function connects to the server at the address and port
+        specified in kwargs.  If no address or port is specified, it will use
+        the defaults of 127.0.0.2:2000
+
+        :param self: Used to Reference the class instance.
+        :param **kwargs: Used to Pass a keyworded, variable-length argument list.
+        :return: The socket object.
+
+        :doc-author: Trelent
+        """
         try:
             address = kwargs.get("address", "127.0.0.1:2000")
             self.address = address.split(':')[0]
@@ -80,12 +121,32 @@ class IPHelper(BaseCommDeviceHelper):
             sys.exit()
 
     def _close(self):
+        """
+        The _close function closes the socket connection to the server.
+
+        :param self: Used to Refer to the object itself.
+        :return: The socket.
+
+        :doc-author: Trelent
+        """
         self._socket.shutdown(socket.SHUT_RDWR)
         self._socket.close()
 
     def beacon(self,
                frequency: float = 3.0,
                payload: str = '<ping>'):
+        """
+        The beacon function sends out a message at the specified frequency.
+        The default frequency is 3Hz, or 3/second. The payload is
+        the ascii message to transmit.
+
+        :param self: Used to Access the class attributes.
+        :param frequency:float=3.0: Used to Define the frequency of the beacon.
+        :param payload:str='<ping>': Used to Define the message that is sent out.
+        :return: A thread that can be started, stopped and joined.
+
+        :doc-author: Trelent
+        """
         """
         Test tool
         Send out an ascii message at defined frequency
