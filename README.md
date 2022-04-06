@@ -1,5 +1,4 @@
 # sandboxzilla 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f374748840314d2e96a2e9f3eb29b27b)](https://www.codacy.com/gh/sandboxzilla/comm_helper/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sandboxzilla/comm_helper&amp;utm_campaign=Badge_Grade)
 
 #Modules
 ##comm_helper
